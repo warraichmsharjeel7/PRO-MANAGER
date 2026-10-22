@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRO MANAGER</title>
+    <meta name="description" content="Manage client projects efficiently with ProjectHub">
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Remix Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="ri-briefcase-line"></i>
+                    <span>PRO MANAGER</span>
+                </div>
+                <button class="close-sidebar" id="close-sidebar">
+                    <i class="ri-close-line"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-view="dashboard">
+                    <i class="ri-dashboard-line"></i>
+                    <span>DASHBOARD</span>
+                </button>
+                <button class="nav-item" data-view="projects">
+                    <i class="ri-folder-line"></i>
+                    <span>ALL PROJECTS</span>
+                </button>
+                <button class="nav-item" data-view="clients">
+                    <i class="ri-group-line"></i>
+                    <span>CLIENTS</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-section">
+                <h3>Filter by Status</h3>
+                <button class="filter-btn" data-status="all">
+                    <i class="ri-checkbox-blank-circle-line"></i>
+                    <span>All Projects</span>
+                    <span class="count" id="count-all">0</span>
+                </button>
+                <button class="filter-btn" data-status="planning">
+                    <i class="ri-lightbulb-line"></i>
+                    <span>Planning</span>
+                    <span class="count" id="count-planning">0</span>
+                </button>
+                <button class="filter-btn" data-status="in-progress">
+                    <i class="ri-time-line"></i>
+                    <span>In Progress</span>
+                    <span class="count" id="count-progress">0</span>
+                </button>
+                <button class="filter-btn" data-status="completed">
+                    <i class="ri-check-line"></i>
+                    <span>Completed</span>
+                    <span class="count" id="count-completed">0</span>
+                </button>
+                <button class="filter-btn" data-status="on-hold">
+                    <i class="ri-pause-circle-line"></i>
+                    <span>On Hold</span>
+                    <span class="count" id="count-hold">0</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <button class="menu-toggle" id="menu-toggle">
+                    <i class="ri-menu-line"></i>
+                </button>
+                <div class="header-title">
+                    <h1 id="view-title">Dashboard</h1>
+                    <p id="view-subtitle">Overview of all projects</p>
+                </div>
+
+                <!-- Theme Toggle Button -->
+                <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle Theme">
+                    <i class="ri-moon-line" id="theme-icon"></i>
+                </button>
+
+                <button class="btn-primary" id="add-project-btn">
+                    <i class="ri-add-line"></i> New Project
+                </button>
+            </header>
+            
+            <!-- Dashboard View -->
+            <div class="view-section active" id="dashboard-view">
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(59, 130, 246, 0.12);">
+                            <i class="ri-folder-line" style="color: #3b82f6;"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-label">Total Projects</span>
+                            <span class="stat-value" id="stat-total">0</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(245, 158, 11, 0.12);">
+                            <i class="ri-time-line" style="color: #f59e0b;"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-label">Active Projects</span>
+                            <span class="stat-value" id="stat-active">0</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(16, 185, 129, 0.12);">
+                            <i class="ri-check-double-line" style="color: #10b981;"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-label">Completed</span>
+                            <span class="stat-value" id="stat-completed">0</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(139, 92, 246, 0.12);">
+                            <i class="ri-money-dollar-circle-line" style="color: #8b5cf6;"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-label">Total Budget</span>
+                            <span class="stat-value" id="stat-budget">$0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Projects -->
+                <div class="section-header">
+                    <h2>Recent Projects</h2>
+                </div>
+                <div class="projects-grid" id="dashboard-projects">
+                    <!-- Projects will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Projects View -->
+            <div class="view-section" id="projects-view">
+                <div class="projects-grid" id="all-projects">
+                    <!-- All projects will be inserted here -->
+                </div>
+                <div class="empty-state" id="empty-state" style="display: none;">
+                    <i class="ri-folder-open-line"></i>
+                    <h3>No projects yet</h3>
+                    <p>Create your first project to get started</p>
+                </div>
+            </div>
+
+            <!-- Clients View -->
+            <div class="view-section" id="clients-view">
+                <div class="clients-grid" id="clients-list">
+                    <!-- Clients will be inserted here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Project Modal -->
+    <div class="modal" id="project-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">New Project</h2>
+                <button class="close-modal" id="close-modal">
+                    <i class="ri-close-line"></i>
+                </button>
+            </div>
+            <form id="project-form">
+                <div class="form-group">
+                    <label for="project-name">Project Name *</label>
+                    <input type="text" id="project-name" required placeholder="Enter project name">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="client-name">Client Name *</label>
+                        <input type="text" id="client-name" required placeholder="Client name">
+                    </div>
+                    <div class="form-group">
+                        <label for="project-status">Status</label>
+                        <select id="project-status">
+                            <option value="planning">Planning</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                            <option value="on-hold">On Hold</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="project-description">Description</label>
+                    <textarea id="project-description" rows="3" placeholder="Project description"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="start-date">Start Date</label>
+                        <input type="date" id="start-date">
+                    </div>
+                    <div class="form-group">
+                        <label for="deadline">Deadline</label>
+                        <input type="date" id="deadline">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="budget">Budget ($)</label>
+                        <input type="number" id="budget" placeholder="10000">
+                    </div>
+                    <div class="form-group">
+                        <label for="progress">Progress (%)</label>
+                        <input type="number" id="progress" min="0" max="100" value="0">
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="cancel-btn">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Project</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Project Details Modal -->
+    <div class="modal" id="details-modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2 id="details-title">Project Details</h2>
+                <button class="close-modal" onclick="closeDetailsModal()">
+                    <i class="ri-close-line"></i>
+                </button>
+            </div>
+            <div class="project-details" id="project-details-content">
+                <!-- Project details will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
